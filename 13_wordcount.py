@@ -9,13 +9,13 @@ A. Lista todas as palavras por ordem alfabética indicando suas ocorrências.
 Ou seja...
 
 Dado um arquivo letras.txt contendo as palavras: A a C c c B b b B
-Quando você executa o programa: python wordcount.py --count letras.txt
+Quando você executa o programa: python 13_wordcount.py --count letras.txt
 Ele deve imprimir todas as palavras em ordem alfabética seguidas
 do número de ocorrências.
 
 Por exemplo:
 
-$ python wordcount.py --count letras.txt
+$ python 13_wordcount.py --count letras.txt
 a 2
 b 4
 c 3
@@ -25,13 +25,13 @@ B. Lista as 20 palavras mais frequêntes indicando suas ocorrências.
 Ou seja...
 
 Dado um arquivo letras.txt contendo as palavras: A a C c c B b b B
-Quando você executa o programa: python wordcount.py --topcount letras.txt
+Quando você executa o programa: python 13_wordcount.py --topcount letras.txt
 Ele deve imprimir as 20 palavras mais frequêntes seguidas
 do número de ocorrências, em ordem crescente de ocorrências.
 
 Por exemplo:
 
-$ python wordcount.py --topcount letras.txt
+$ python 13_wordcount.py --topcount letras.txt
 b 4
 c 3
 a 2
@@ -60,6 +60,37 @@ import sys
 
 # A função abaixo chama print_words() ou print_top() de acordo com os
 # parêtros do programa.
+def print_words(filename):
+    dict_words = process_data(filename)
+    for key, value in dict_words.items():
+        print(key, value)
+
+
+def process_data(filename):
+    file = open(filename)
+    dict_words = {}
+    for line in file:
+        for word in line.strip().split(' '):
+            word = word.strip().lower()
+            if not word:
+                continue
+            if dict_words.get(word):
+                dict_words[word] += 1
+            else:
+                dict_words[word] = 1
+    return dict_words
+
+
+def print_top(filename):
+    dict_words = process_data(filename)
+    words = list(dict_words.items())
+    words.sort(reverse=True, key=lambda x: x[1])
+    for val, (key, value) in enumerate(words):
+        if val == 20:
+            break
+        print(key, value)
+
+
 def main():
     if len(sys.argv) != 3:
         print('Utilização: ./13_wordcount.py {--count | --topcount} file')

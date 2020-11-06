@@ -8,9 +8,15 @@ Exemplo: [1, 2, 2, 3]
 Irá retornar: [1, 2, 3]
 """
 
+
 def remove_adjacent(nums):
-    # +++ SUA SOLUÇÃO +++
-    return
+    before = float('inf')
+    new_list = []
+    for num in nums:
+        if num != before:
+            new_list.append(num)
+            before = num
+    return new_list
 
 
 # --- Daqui para baixo são apenas códigos auxiliáries de teste. ---

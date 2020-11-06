@@ -9,9 +9,22 @@ por 'good' e retorne a string resultante.
 Exemplo: 'The dinner is not that bad!' retorna 'The dinner is good!'
 """
 
+
+def find(str, ch):
+    indice = 0
+    while indice < len(str):
+        if str[indice: len(ch) + indice] == ch:
+            return indice
+        indice = indice + 1
+    return -1
+
+
 def not_bad(s):
-    # +++ SUA SOLUÇÃO +++
-    return
+    indice_not = find(s, "not")
+    indice_bad = find(s, "bad")
+    if indice_not < indice_bad:
+        return s[:indice_not] + 'good' + s[indice_bad + len("bad"):]
+    return s
 
 
 # --- Daqui para baixo são apenas códigos auxiliáries de teste. ---

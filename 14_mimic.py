@@ -41,30 +41,46 @@ método que escolhe um elemento aleatório de uma lista não vazia.
 
 import random
 import sys
+from collections import defaultdict
 
 
 def mimic_dict(filename):
-  """Retorna o dicionario imitador mapeando cada palavra para a lista de
-  palavras subsequentes."""
-    # +++ SUA SOLUÇÃO +++
-  return
+    """Retorna o dicionario imitador mapeando cada palavra para a lista de
+    palavras subsequentes."""
+    dict_words = defaultdict()
+    file = open(filename)
+    before = ''
+    for line in file:
+        for word in line.strip().split(' '):
+            word = word.strip().lower()
+            if not dict_words.get(before):
+                dict_words[before] = set()
+            dict_words[before].add(word)
+            before = word
+    if not dict_words.get(before):
+        dict_words[before] = set()
+    dict_words[before].add('')
+    return dict_words
 
 
-def print_mimic(mimic_dict, word):
-  """Dado o dicionario imitador e a palavra inicial, imprime texto de 200 palavras."""
-    # +++ SUA SOLUÇÃO +++
-  return
+def print_mimic(mimic_dict, word, depth=0):
+    """Dado o dicionario imitador e a palavra inicial, imprime texto de 200 palavras."""
+    if depth == 200:
+        return
+    word_selected = random.choice(list(mimic_dict[word]))
+    print(word_selected, end=' ')
+    return print_mimic(mimic_dict, word_selected, depth=depth + 1)
 
 
 # Chama mimic_dict() e print_mimic()
 def main():
-  if len(sys.argv) != 2:
-    print('Utilização: ./14_mimic.py file-to-read')
-    sys.exit(1)
+    if len(sys.argv) != 2:
+        print('Utilização: ./14_mimic.py file-to-read')
+        sys.exit(1)
 
-  dict = mimic_dict(sys.argv[1])
-  print_mimic(dict, '')
+    dict = mimic_dict(sys.argv[1])
+    print_mimic(dict, '')
 
 
 if __name__ == '__main__':
-  main()
+    main()

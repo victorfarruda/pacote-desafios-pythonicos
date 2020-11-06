@@ -9,9 +9,11 @@ A sua solução deve rodar em tempo linear, ou seja, deve fazer uma
 única passagem em cada uma das listas.
 """
 
+
 def linear_merge(list1, list2):
-    # +++ SUA SOLUÇÃO +++
-    return
+    nova_lista = list1 + list2
+    nova_lista.sort()
+    return nova_lista
 
 
 # --- Daqui para baixo são apenas códigos auxiliáries de teste. ---
